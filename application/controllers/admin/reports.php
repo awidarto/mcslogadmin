@@ -3679,7 +3679,6 @@ class Reports extends Application
                 'Pending',
                 'Catatan',
                 'ALAMAT',
-                'Phone',
                 'No Kode Penjualan Toko'
             ); // Setting headings for the table
 
@@ -3837,9 +3836,7 @@ class Reports extends Application
                     array('data'=>( $chg == 0 )?0:idr($chg),'class'=>'currency '.$codclass),
                     $r->shipping_address,
                     $this->split_phone($r->phone).'<br />'.$this->split_phone($r->mobile1).'<br />'.$this->split_phone($r->mobile2),
-                    $this->hide_trx($r->merchant_trans_id),
-                    '',
-                    ''
+                    $this->hide_trx($r->merchant_trans_id)
                 );
 
 
@@ -3872,11 +3869,8 @@ class Reports extends Application
                     $r->status,
                     $r->pending_count,
                     $r->delivery_note,
-                    '<b>'.$r->recipient_name.'</b><br />'.$r->shipping_address,
-                    $this->split_phone($r->phone).'<br />'.$this->split_phone($r->mobile1).'<br />'.$this->split_phone($r->mobile2),
-                    $this->hide_trx($r->merchant_trans_id),
-                    '',
-                    ''
+                    '<b>'.$r->recipient_name.'</b><br />'.$r->shipping_address.'<br />'.$this->split_phone($r->phone).'<br />'.$this->split_phone($r->mobile1).'<br />'.$this->split_phone($r->mobile2),
+                    $this->hide_trx($r->merchant_trans_id)
                 );
 
 
@@ -3890,13 +3884,11 @@ class Reports extends Application
                     '',
                     '',
                     'Rata-rata',
-                    $order2assigndays / $seq,
+                    number_format($order2assigndays / $seq, 2, ',','.' ),
                     '',
-                    $assign2deliverydays / $seq,
+                    number_format($assign2deliverydays / $seq, 2, ',','.' ),
                     '',
-                    $order2deliverydays / $seq,
-                    '',
-                    '',
+                    number_format($order2deliverydays / $seq, 2, ',','.' ),
                     '',
                     '',
                     '',
