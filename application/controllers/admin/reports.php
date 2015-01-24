@@ -3208,6 +3208,10 @@ class Reports extends Application
 
             }
 
+            if($gt == 0 ){
+                $gt = $total;
+            }
+
             $payable = $gt;
 
             $total_delivery += (int)str_replace('.','',$dc);
