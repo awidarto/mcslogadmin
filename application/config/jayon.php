@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['site_title']	= 'Jayon Express Admin';
+$config['site_title']	= 'm-CourierSystem Admin';
 
 $config['infinite_scroll'] = false;
 

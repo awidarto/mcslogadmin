@@ -442,9 +442,9 @@ class Delivery extends Application
 				'<span class="'.( ($key['dupe'] > 0 )?'red':'' ).'">'.$this->hide_trx($key['merchant_trans_id']).'</span>'.$markscan,
 				colorizetype($key['delivery_type']),
 				'<b>'.$key['merchant'].'</b><br />'.$app_name,
-                $printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reschedule.'<br /><br />'.$changestatus.'<br /><br />'.$puchangestatus.'<br /><br />'.$whchangestatus.'<br /><br />'.$viewlog,
+                $printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reschedule.'<br /><br />'/*.$changestatus.'<br /><br />'.$puchangestatus.'<br /><br />'.$whchangestatus.'<br /><br />'*/.$viewlog,
                 $delivery_check,
-                colorizestatus($key['status']).'<br />'.$pick_stat.'<br />'.$wh_stat,
+                colorizestatus($key['status'])/*.'<br />'.$pick_stat.'<br />'.$wh_stat*/,
                 $direction,
                 '<img class="sign" src="'.$sign['sign'].'" />',
 				//(double)$key['width']*(double)$key['height']*(double)$key['length'],
@@ -1241,9 +1241,9 @@ class Delivery extends Application
                 $this->hide_trx($key['merchant_trans_id']).$markscan,
                 colorizetype($key['delivery_type']),
                 '<b>'.$key['merchant'].'</b><br />'.$app_name,
-                $printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reschedule.'<br /><br />'.$changestatus.'<br /><br />'.$viewlog,
+                $printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reschedule/*.'<br /><br />'.$changestatus.'<br /><br />'*/.$viewlog,
                 $delivery_check,
-                colorizestatus($key['status']).'<br />'.$pick_stat.'<br />'.$wh_stat,
+                colorizestatus($key['status'])/*.'<br />'.$pick_stat.'<br />'.$wh_stat*/,
                 $direction,
                 $key['width'].' x '.$key['height'].' x '.$key['length'].' = '.$volume,
                 //(double)$key['width']*(double)$key['height']*(double)$key['length'],
@@ -1971,9 +1971,9 @@ class Delivery extends Application
                 //$this->hide_trx($key['merchant_trans_id']).$markscan,
                 colorizetype($key['delivery_type']),
                 '<b>'.$key['merchant'].'</b><br />'.$app_name,
-                $printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reschedule.'<br /><br />'.$changestatus.'<br /><br />'.$viewlog,
+                $printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reschedule/*.'<br /><br />'.$changestatus.'<br /><br />'*/.$viewlog,
                 $delivery_check,
-                colorizestatus($key['status']).'<br />'.$pick_stat.'<br />'.$wh_stat,
+                colorizestatus($key['status'])/*.'<br />'.$pick_stat.'<br />'.$wh_stat*/,
                 $direction,
                 $key['width'].' x '.$key['height'].' x '.$key['length'].' = '.$volume,
                 //(double)$key['width']*(double)$key['height']*(double)$key['length'],
@@ -2579,7 +2579,7 @@ class Delivery extends Application
                 $this->hide_trx($key['merchant_trans_id']),
 				$key['shipping_address'].'<br />'.$locpicker,
 				$key['phone'].'<br />'.$key['mobile1'].'<br />'.$key['mobile2'],
-				colorizestatus($key['status']).'<br />'.$pick_stat.'<br />'.$wh_stat,
+				colorizestatus($key['status'])/*.'<br />'.$pick_stat.'<br />'.$wh_stat*/,
 				//$key['reschedule_ref'],
 				//$key['revoke_ref'],
 				//($key['status'] == 'confirm')?$assign:''.' '.$edit.' '.$delete
@@ -3741,10 +3741,10 @@ class Delivery extends Application
                 $this->hide_trx($key['merchant_trans_id']),
 				$key['shipping_address'].'<br />'.$locpicker,
 				$key['phone'].'<br />'.$key['mobile1'].'<br />'.$key['mobile2'],
-				colorizestatus($key['status']).'<br />'.$pick_stat.'<br />'.$wh_stat,
+				colorizestatus($key['status'])/*.'<br />'.$pick_stat.'<br />'.$wh_stat*/,
 				//$key['reschedule_ref'],
 				//$key['revoke_ref'],
-				$reassign.'<br />'.$changestatus.'<br />'.$viewlog //$printslip.' '.$edit.' '.$delete
+				$reassign.'<br />'/*.$changestatus*/.'<br />'.$viewlog //$printslip.' '.$edit.' '.$delete
 			);
 
 
@@ -4294,11 +4294,11 @@ class Delivery extends Application
                 $key['phone'].'<br />'.$key['mobile1'].'<br />'.$key['mobile2'],
                 $delivery_check,
                 //'<span class="view_detail" id="'.$key['delivery_id'].'" style="text-decoration:underline;cursor:pointer;">'.$key['delivery_id'].'</span>',
-				$thumbstat.'<br />'.$pick_stat.'<br />'.$wh_stat,
+				$thumbstat/*.'<br />'.$pick_stat.'<br />'.$wh_stat*/,
                 '<img class="sign" src="'.$sign['sign'].'" />',
                 $key['pending_count'],
                 $notes,
-				$printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reassign.'<br /><br />'.$changestatus.'<br /><br />'.$puchangestatus.'<br /><br />'.$whchangestatus.'<br /><br />'.$viewlog,
+				$printslip.'<br /><br />'.$printlabel.'<br /><br />'.$reassign/*.'<br /><br />'.$changestatus.'<br /><br />'.$puchangestatus.'<br /><br />'.$whchangestatus.'<br /><br />'*/.$viewlog,
                 $this->hide_trx($key['merchant_trans_id']),
                 $key['fulfillment_code'],
                 $key['delivery_cost'],
@@ -4672,7 +4672,7 @@ class Delivery extends Application
                 $key['phone'].'<br />'.$key['mobile1'].'<br />'.$key['mobile2'],
                 $thumbnail,
                 $key['delivery_note'],
-                colorizestatus($key['status']).'<br />'.$pick_stat.'<br />'.$wh_stat,
+                colorizestatus($key['status'])/*.'<br />'.$pick_stat.'<br />'.$wh_stat*/,
                 $notes,
                 form_checkbox('assign[]',$key['delivery_id'],FALSE,'class="assign_check" data-slipname="'.$slipname.'" data-merchantid="'.$key['merchant_id'].'" data-merchant="'.$key['merchant'].'" title="'.$key['status'].'"').'<span class="view_detail" id="'.$key['delivery_id'].'" style="text-decoration:underline;cursor:pointer;">'.$key['delivery_id'].'</span>',
                 $this->hide_trx($key['merchant_trans_id']),
@@ -4681,7 +4681,7 @@ class Delivery extends Application
                 ($key['delivery_type'] == 'COD')?$key['cod_cost']:'',
                 $key['reschedule_ref'],
 				$key['revoke_ref'],
-				$printslip.'<br /><br />'.$viewlog.'<br /><br />'.$changestatus.'<br /><br />'.$puchangestatus.'<br /><br />'.$whchangestatus
+				$printslip.'<br /><br />'.$viewlog/*.'<br /><br />'.$changestatus.'<br /><br />'.$puchangestatus.'<br /><br />'.$whchangestatus*/
 			);
 		}
 
