@@ -7,7 +7,7 @@ body{padding:0px;background: url('../images/long_logo.png') no-repeat right top;
 #container{margin:0px auto;padding:10px 20px;}
 #header{width:100%;margin:0;padding:0;border-bottom:thin solid #efefef;}
 #logo{width:1000px;margin:0 auto;color:#231e18;height:150px;}
-#nav_bg{background:brown;width:100%;padding-top:4px;}
+#nav_bg{background:#4118c2;width:100%;padding-top:4px;}
 
 #login{
 	margin:auto auto;
