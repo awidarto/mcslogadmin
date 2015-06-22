@@ -1272,7 +1272,11 @@ function send_notification($subject,$to,$cc = null,$reply_to = null,$template = 
 
 	$CI->email->message($body);
 
-	$result = $CI->email->send();
+    $result = 0;
+
+    if( $CI->config->item('send_notification') ){
+        $result = $CI->email->send();
+    }
 
 	$log['timestamp'] = date('Y-m-d h:i:s',time());
 	$log['from'] = $CI->config->item('notify_username');
@@ -1360,7 +1364,11 @@ function send_admin($subject,$to,$cc = null,$template = 'default',$data = '',$at
 
 	$CI->email->message($body);
 
-	$result = $CI->email->send();
+    $result = 0;
+
+    if( $CI->config->item('send_admin') ){
+        $result = $CI->email->send();
+    }
 
 	$log['timestamp'] = date('Y-m-d h:i:s',time());
 	$log['from'] = $CI->config->item('admin_username');

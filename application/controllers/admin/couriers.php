@@ -2,7 +2,7 @@
 
 class Couriers extends Application
 {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -11,17 +11,17 @@ class Couriers extends Application
 			'table_open' => '<table border="0" cellpadding="4" cellspacing="0" class="dataTable">'
 		);
 		$this->table->set_template($this->table_tpl);
-		
+
 		$this->breadcrumb->add_crumb('Home','admin/dashboard');
 		$this->breadcrumb->add_crumb('Users','admin/users/manage');
-		
+
 	}
 
 	public function ajaxmanage(){
 
 		$limit_count = $this->input->post('iDisplayLength');
 		$limit_offset = $this->input->post('iDisplayStart');
-		
+
 		$sort_col = $this->input->post('iSortCol_0');
 		$sort_dir = $this->input->post('sSortDir_0');
 
@@ -33,16 +33,16 @@ class Couriers extends Application
 		$count_all = $this->db->count_all($this->config->item('jayon_couriers_table'));
 
 		$count_display_all = $this->db->count_all_results($this->config->item('jayon_couriers_table'));
-		
+
 		$data = $this->db->limit($limit_count, $limit_offset)->order_by($columns[$sort_col],$sort_dir)->get($this->config->item('jayon_couriers_table'));
-		
+
 		//print $this->db->last_query();
-		
+
 		$result = $data->result_array();
-			
+
 		$aadata = array();
-		
-		
+
+
 		foreach($result as $value => $key)
 		{
 			$delete = anchor("admin/couriers/delete/".$key['id']."/", "Delete"); // Build actions links
@@ -51,28 +51,28 @@ class Couriers extends Application
 			$detail = anchor("admin/couriers/details/".$key['id']."/", $key['username']); // Build detail links
 			$aadata[] = array($detail, $key['email'],$key['fullname'],$key['mobile'],$key['phone'],$this->get_group_description($key['group_id']),$edit.' '.$editpass.' '.$delete); // Adding row to table
 		}
-		
+
 		$result = array(
 			'sEcho'=> $this->input->post('sEcho'),
 			'iTotalRecords'=>$count_all,
 			'iTotalDisplayRecords'=> $count_display_all,
 			'aaData'=>$aadata
 		);
-		
+
 		print json_encode($result);
 	}
-	
-	
+
+
 	public function manage()
 	{
-	    $this->load->library('table');		
+	    $this->load->library('table');
 
 		$this->breadcrumb->add_crumb('Couriers','admin/couriers/manage');
-			
+
 		$data = $this->db->get($this->config->item('jayon_couriers_table'));
 		$result = $data->result_array();
 		$this->table->set_heading('Username', 'Email','Full Name','Mobile','Phone','Group','Actions'); // Setting headings for the table
-		
+
 		foreach($result as $value => $key)
 		{
 			$delete = anchor("admin/couriers/delete/".$key['id']."/", "Delete"); // Build actions links
@@ -82,26 +82,48 @@ class Couriers extends Application
 			$this->table->add_row($detail, $key['email'],$key['fullname'],$key['mobile'],$key['phone'],$this->get_group_description($key['group_id']),$edit.' '.$editpass.' '.$delete); // Adding row to table
 		}
 
+        $pd = get_print_default();
+
+        if($pd){
+            $page['resolution'] = $pd['res'];
+            $page['cell_width'] = $pd['cell_width'];
+            $page['cell_height'] = $pd['cell_height'];
+            $page['columns'] = $pd['col'];
+            $page['margin_right'] = $pd['mright'];
+            $page['margin_bottom'] = $pd['mbottom'];
+            $page['font_size'] = $pd['fsize'];
+            $page['code_type'] = $pd['codetype'];
+        }else{
+            $page['resolution'] = 150;
+            $page['cell_width'] = 450;
+            $page['cell_height'] = 250;
+            $page['columns'] = 2;
+            $page['margin_right'] = 10;
+            $page['margin_bottom'] = 10;
+            $page['font_size'] = 12;
+            $page['code_type'] = 'barcode';
+        }
+
 		$page['sortdisable'] = '6';
 		$page['ajaxurl'] = 'admin/couriers/ajaxmanage';
 		$page['add_button'] = array('link'=>'admin/couriers/add','label'=>'Add New Courier');
 		$page['page_title'] = 'Manage Couriers';
 		$this->ag_auth->view('ajaxlistview',$page); // Load the view
 	}
-	
+
 	function details($id){
-		$this->load->library('table');		
-	
+		$this->load->library('table');
+
 		$user = $this->get_user($id);
-		
+
 		foreach($user as $key=>$val){
 			$this->table->add_row($key,$val); // Adding row to table
 		}
-		
+
 		$page['page_title'] = 'Courier Info';
 		$this->ag_auth->view('couriers/details',$page);
 	}
-	
+
 	public function delete($id)
 	{
 		$this->db->where('id', $id)->delete($this->config->item('jayon_couriers_table'));
@@ -117,7 +139,7 @@ class Couriers extends Application
 			return false;
 		}
 	}
-	
+
 	public function get_group(){
 		$this->db->select('id,description');
 		$result = $this->db->get($this->ag_auth->config['auth_group_table']);
@@ -136,27 +158,27 @@ class Couriers extends Application
 		$row = $result->row();
 		return $row->description;
 	}
-	
+
 	public function update_user($id,$data){
 		$result = $this->db->where('id', $id)->update($this->config->item('jayon_couriers_table'),$data);
 		return $this->db->affected_rows();
 	}
-	
-	
+
+
 	public function add()
 	{
 		$this->form_validation->set_rules('username', 'Username', 'required|min_length[6]|callback_field_exists');
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[password_conf]');
 		$this->form_validation->set_rules('password_conf', 'Password Confirmation', 'required|min_length[6]|matches[password]');
 		$this->form_validation->set_rules('email', 'Email Address', 'required|min_length[6]|valid_email|callback_field_exists');
-		$this->form_validation->set_rules('fullname', 'Full Name', 'required|trim|xss_clean');	
-		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');	
-		$this->form_validation->set_rules('phone', 'Phone Number', 'required|trim|xss_clean');   
+		$this->form_validation->set_rules('fullname', 'Full Name', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('phone', 'Phone Number', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('group_id', 'Group', 'trim');
-				
+
 		if($this->form_validation->run() == FALSE)
-		{	
+		{
 			$data['groups'] = array(group_id('courier')=>'Jayon Courier');
 			$data['page_title'] = 'Add Courier';
 			$this->ag_auth->view('couriers/add',$data);
@@ -166,9 +188,9 @@ class Couriers extends Application
 			$username = set_value('username');
 			$password = $this->ag_auth->salt(set_value('password'));
 			$fullname = set_value('fullname');
-			$address = set_value('address'); 
+			$address = set_value('address');
 			$phone= set_value('phone');
-			$mobile= set_value('mobile'); 
+			$mobile= set_value('mobile');
 			$email = set_value('email');
 			$group_id = set_value('group_id');
 
@@ -178,18 +200,18 @@ class Couriers extends Application
 				'fullname'=>$fullname,
 				'address'=>$address,
 				'phone'=>$phone,
-				'mobile'=>$mobile, 
+				'mobile'=>$mobile,
 				'email'=>$email,
 				'group_id'=>$group_id
 			);
-			
+
 			if($this->db->insert($this->config->item('jayon_couriers_table'),array('username'=>$username, 'password'=>$password, 'email'=>$email, 'group_id'=>$group_id)) === TRUE)
 			{
 				$data['message'] = "The user account has now been created.";
 				$data['page_title'] = 'Add Courier';
 				$data['back_url'] = anchor('admin/couriers/manage','Back to list');
 				$this->ag_auth->view('message', $data);
-				
+
 			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
 			else
 			{
@@ -200,21 +222,21 @@ class Couriers extends Application
 			}
 
 		} // if($this->form_validation->run() == FALSE)
-		
+
 	} // public function register()
 
 	public function edit($id)
 	{
 		$this->form_validation->set_rules('email', 'Email Address', 'required|min_length[6]|valid_email');
-		$this->form_validation->set_rules('fullname', 'Full Name', 'required|trim|xss_clean');	
-		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');	
-		$this->form_validation->set_rules('phone', 'Phone Number', 'required|trim|xss_clean');   
+		$this->form_validation->set_rules('fullname', 'Full Name', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('phone', 'Phone Number', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('group_id', 'Group', 'trim');
-		
+
 		$user = $this->get_user($id);
 		$data['user'] = $user;
-				
+
 		if($this->form_validation->run() == FALSE)
 		{
 			$data['groups'] = array(group_id('courier')=>group_desc('courier'));
@@ -227,11 +249,11 @@ class Couriers extends Application
 			$dataset['group_id'] = set_value('group_id');
 
 			$dataset['fullname'] = set_value('fullname');
-			$dataset['address'] = set_value('address'); 
+			$dataset['address'] = set_value('address');
 			$dataset['phone'] = set_value('phone');
-			$dataset['mobile'] = set_value('mobile'); 
-			
-			
+			$dataset['mobile'] = set_value('mobile');
+
+
 			if($this->db->where('id',$id)->update($this->config->item('jayon_couriers_table'),$dataset) === TRUE)
 			//if($this->update_user($id,$dataset) === TRUE)
 			{
@@ -239,7 +261,7 @@ class Couriers extends Application
 				$data['page_title'] = 'Edit Courier';
 				$data['back_url'] = anchor('admin/couriers/manage','Back to list');
 				$this->ag_auth->view('message', $data);
-				
+
 			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
 			else
 			{
@@ -250,7 +272,7 @@ class Couriers extends Application
 			}
 
 		} // if($this->form_validation->run() == FALSE)
-		
+
 	} // public function register()
 
 	public function editpass($id)
@@ -260,7 +282,7 @@ class Couriers extends Application
 
 		$user = $this->get_user($id);
 		$data['user'] = $user;
-				
+
 		if($this->form_validation->run() == FALSE)
 		{
 			$data['groups'] = array(group_id('courier')=>group_desc('courier'));
@@ -279,7 +301,7 @@ class Couriers extends Application
 				$data['page_title'] = 'Edit Courier Success';
 				$data['back_url'] = anchor('admin/couriers/manage','Back to list');
 				$this->ag_auth->view('message', $data);
-				
+
 			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
 			else
 			{
@@ -290,7 +312,7 @@ class Couriers extends Application
 			}
 
 		} // if($this->form_validation->run() == FALSE)
-		
+
 	} // public function register()
 	// WOKRING ON PROPER IMPLEMENTATION OF ADDING & EDITING USER ACCOUNTS
 }
