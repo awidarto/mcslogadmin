@@ -271,19 +271,19 @@ if(isset($_SERVER) && isset($_SERVER['HTTP_HOST']) ){
         $config['api_url'] = 'http://localhost/jayonapidev/v2';
     }else{
         //online version should redirect to main site
-        $config['public_path'] = '/var/www/pro/jayonadmin/public/';
-        $config['picture_path'] = '/var/www/pro/jayonadmin/public/receiver/';
-        $config['pickuppic_path'] = '/var/www/pro/jayonadmin/public/pickup/';
-        $config['thumbnail_path'] = '/var/www/pro/jayonadmin/public/receiver_thumb/';
+        $config['public_path'] = '/var/jex/demo/demo/admin/public/';
+        $config['picture_path'] = '/var/jex/demo/demo/admin/public/receiver/';
+        $config['pickuppic_path'] = '/var/jex/demo/demo/admin/public/pickup/';
+        $config['thumbnail_path'] = '/var/jex/demo/demo/admin/public/receiver_thumb/';
         $config['api_url'] = 'http://localhost/beta2/jayonapi/v2';
     }
 
 }else{
         //online version should redirect to main site
-        $config['public_path'] = '/var/www/pro/jayonadmin/public/';
-        $config['picture_path'] = '/var/www/pro/jayonadmin/public/receiver/';
-        $config['pickuppic_path'] = '/var/www/pro/jayonadmin/public/pickup/';
-        $config['thumbnail_path'] = '/var/www/pro/jayonadmin/public/receiver_thumb/';
+        $config['public_path'] = '/var/jex/demo/demo/admin/public/';
+        $config['picture_path'] = '/var/jex/demo/demo/admin/public/receiver/';
+        $config['pickuppic_path'] = '/var/jex/demo/demo/admin/public/pickup/';
+        $config['thumbnail_path'] = '/var/jex/demo/demo/admin/public/receiver_thumb/';
         $config['api_url'] = 'http://localhost/beta2/jayonapi/v2';
 }
 
