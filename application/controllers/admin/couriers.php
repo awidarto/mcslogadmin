@@ -179,7 +179,7 @@ class Couriers extends Application
 
 		if($this->form_validation->run() == FALSE)
 		{
-			$data['groups'] = array(group_id('courier')=>'Jayon Courier');
+			$data['groups'] = array(group_id('courier')=>'Courier');
 			$data['page_title'] = 'Add Courier';
 			$this->ag_auth->view('couriers/add',$data);
 		}
