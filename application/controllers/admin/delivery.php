@@ -5700,7 +5700,9 @@ class Delivery extends Application
 		$assignment_zone = $this->input->post('assignment_zone');
 		$assignment_city = $this->input->post('assignment_city');
 
-		$dev = $this->db->select('id,identifier,descriptor,devname')->like('city',trim($assignment_city))->get($this->config->item('jayon_devices_table'));
+		$dev = $this->db->select('id,identifier,descriptor,devname')
+                ->where('is_on',1)
+                ->like('city',trim($assignment_city))->get($this->config->item('jayon_devices_table'));
 
 		$sql = $this->db->last_query();
 
@@ -5718,6 +5720,7 @@ class Delivery extends Application
 					->where('assignment_date',$assignment_date)
 					->where('assignment_timeslot',$sl)
 					->where('device_id',$device['id'])
+                    ->where('is_on',1)
 					->count_all_results($this->config->item('assigned_delivery_table'));
 				//$result[] = array('id'=>$device['id'],'device'=>$device['identifier'],'assignment'=>$count_dev);
 				$slotform .= sprintf($slotradio,$sl, get_slot_range($sl),$count_dev);
@@ -5736,7 +5739,9 @@ class Delivery extends Application
         $assignment_date = $this->input->post('assignment_date');
         $assignment_city = $this->input->post('assignment_city');
 
-        $dev = $this->db->select('id,identifier,descriptor,devname')->like('city',trim($assignment_city))->get($this->config->item('jayon_devices_table'));
+        $dev = $this->db->select('id,identifier,descriptor,devname')
+                    ->where('is_on',1)
+                    ->like('city',trim($assignment_city))->get($this->config->item('jayon_devices_table'));
 
         $sql = $this->db->last_query();
 
@@ -5754,6 +5759,7 @@ class Delivery extends Application
                     ->where('assignment_date',$assignment_date)
                     ->where('assignment_timeslot',$sl)
                     ->where('device_id',$device['id'])
+                    ->where('is_on',1)
                     ->count_all_results($this->config->item('assigned_delivery_table'));
                 //$result[] = array('id'=>$device['id'],'device'=>$device['identifier'],'assignment'=>$count_dev);
                 $slotform .= sprintf($slotradio,$sl, get_slot_range($sl),$count_dev);

@@ -637,7 +637,7 @@ class Dl extends Application
         $num = 0;
 
         $headrow = array(
-            'AWB / Jayon Delivery ID'
+            'AWB / Delivery ID'
         );
 
 
