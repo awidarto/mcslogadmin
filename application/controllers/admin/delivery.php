@@ -5720,7 +5720,6 @@ class Delivery extends Application
 					->where('assignment_date',$assignment_date)
 					->where('assignment_timeslot',$sl)
 					->where('device_id',$device['id'])
-                    ->where('is_on',1)
 					->count_all_results($this->config->item('assigned_delivery_table'));
 				//$result[] = array('id'=>$device['id'],'device'=>$device['identifier'],'assignment'=>$count_dev);
 				$slotform .= sprintf($slotradio,$sl, get_slot_range($sl),$count_dev);
@@ -5759,7 +5758,6 @@ class Delivery extends Application
                     ->where('assignment_date',$assignment_date)
                     ->where('assignment_timeslot',$sl)
                     ->where('device_id',$device['id'])
-                    ->where('is_on',1)
                     ->count_all_results($this->config->item('assigned_delivery_table'));
                 //$result[] = array('id'=>$device['id'],'device'=>$device['identifier'],'assignment'=>$count_dev);
                 $slotform .= sprintf($slotradio,$sl, get_slot_range($sl),$count_dev);
