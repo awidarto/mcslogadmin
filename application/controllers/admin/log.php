@@ -369,6 +369,28 @@ class Log extends Application
 			'<input type="text" name="search_msg_status" id="search_result" value="Search msg status" class="search_init" />'
 			);
 
+        $pd = get_print_default();
+
+        if($pd){
+            $page['resolution'] = $pd['res'];
+            $page['cell_width'] = $pd['cell_width'];
+            $page['cell_height'] = $pd['cell_height'];
+            $page['columns'] = $pd['col'];
+            $page['margin_right'] = $pd['mright'];
+            $page['margin_bottom'] = $pd['mbottom'];
+            $page['font_size'] = $pd['fsize'];
+            $page['code_type'] = $pd['codetype'];
+        }else{
+            $page['resolution'] = 150;
+            $page['cell_width'] = 480;
+            $page['cell_height'] = 245;
+            $page['columns'] = 2;
+            $page['margin_right'] = 18;
+            $page['margin_bottom'] = 10;
+            $page['font_size'] = 12;
+            $page['code_type'] = 'barcode';
+        }
+
 		$page['sortdisable'] = '';
 		$page['ajaxurl'] = 'admin/log/ajaxoutbox';
 		$page['page_title'] = 'Email Outbox';
