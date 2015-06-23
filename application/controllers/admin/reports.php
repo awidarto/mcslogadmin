@@ -6961,11 +6961,11 @@ class Reports extends Application
 		$this->table->set_heading(
 			'No.',
 			'Date',
-            'Incoming',
+            'Assigned',
 			'Delivered',
 			'Pending',
             'Return',
-            'Other Status',
+            //'Other Status',
 			'Delivery Count'
 		); // Setting headings for the table
 
@@ -7025,8 +7025,8 @@ class Reports extends Application
 				$dl,
 				$ps,
                 $tr,
-                $ns + $rs,
-				$dl + $ns + $rs + $ps + $tr
+                //$ns + $rs,
+				$dl /*+ $ns + $rs*/ + $ps + $tr
 			);
 
 			$seq++;
