@@ -1393,6 +1393,8 @@ function colorizestatus($status, $prefix = '', $suffix = ''){
 		$class = $colors[$status];
 	}
 
+    $status = ($status == 'sudah diambil')?'sudah di kurir':$status;
+
     $atatus = str_replace('_', ' ', $status);
     $status = $prefix.ucwords($status).$suffix;
 
