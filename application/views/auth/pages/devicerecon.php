@@ -73,6 +73,9 @@ table#recon_select td {
 	padding: 3px;
 }
 
+table#toClone td{
+    text-align: center;
+}
 </style>
 
 <?php
